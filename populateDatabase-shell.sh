@@ -8,6 +8,7 @@ ADMIN_USERS=
 # To fetch all users whose content is not updated.
 function getAdminUsers()
 {
+# shellcheck disable=SC2006
 ADMIN_USERS=`
 SQLPLUS="$ORACLE_HOME/bin/sqlplus -s $DB_USER/$DB_PWD"
 $SQLPLUS << EOF_SQL_1
@@ -46,7 +47,7 @@ for userID in ${ADMIN_USERS}; do
 	printf "Content populated for user Id : [userID] \n"
 
 	#Add entry in user content tables
-	updateUserAndContent ${userID}
+	updateUserAndContent "${userID}"
 
 done
 }

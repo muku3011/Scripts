@@ -49,7 +49,7 @@ Try
 	$Credential = New-Object System.Management.Automation.PSCredential ($userName, $Password)
 
 	#Create ssh session
-	$SshSession = New-SSHSession -ComputerName $remoteMachine -Credential $Credential -Port $sftpSshPort -AcceptKey
+	New-SSHSession -ComputerName $remoteMachine -Credential $Credential -Port $sftpSshPort -AcceptKey
 
 	#Perform some operation inside the server
 	Invoke-SSHCommand -Index 0 -Command "source ~/.profile; touch $instanceName"
@@ -73,13 +73,13 @@ Try
 
 	# Copy *.war files from target to one folder for doing SFTP
 	if($instanceName -eq "test1") {
-		cp $path1\source\A.war $folderForWarFiles
-		cp $path1\source\B.war $folderForWarFiles
-		cp $path1\source\C.war $folderForWarFiles
+		Copy-Item $path1\source\A.war $folderForWarFiles
+		Copy-Item $path1\source\B.war $folderForWarFiles
+		Copy-Item $path1\source\C.war $folderForWarFiles
 	} else {
-		cp $path2\sources\D.war $folderForWarFiles
-		cp $path2\sources\E.war $folderForWarFiles
-		cp $path2\sources\F.war $folderForWarFiles
+		Copy-Item $path2\sources\D.war $folderForWarFiles
+		Copy-Item $path2\sources\E.war $folderForWarFiles
+		Copy-Item $path2\sources\F.war $folderForWarFiles
 	}
 
 	#Remove any open sessions
@@ -114,7 +114,7 @@ Try
 	Remove-Item $folderForWarFiles\* -Filter *.war
 
 	#Create ssh session
-	$SshSession = New-SSHSession -ComputerName $remoteMachine -Credential $Credential -AcceptKey
+	New-SSHSession -ComputerName $remoteMachine -Credential $Credential -AcceptKey
 
 	#Execute command in server
 	Invoke-SSHCommand -Index 0 -Command "source ~/.profile; touch $instanceName"
